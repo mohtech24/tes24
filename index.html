@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#FF8C00"> <!-- Updated theme color to orange -->
+
+    <title>منشئ الصور Ai</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        :root {
+
+            --primary: #FF8C00; /* Deep Orange */
+
+            --primary-light: #FFA500; /* Lighter Orange */
+
+            --secondary: #1a1a1a; /* Very Dark Gray / Near Black */
+
+            --success: #28a745; /* Standard Green */
+
+            --danger: #dc3545; /* Standard Red */
+
+            --warning: #ffc107; /* Standard Orange */
+
+            --info: #007bff; /* Standard Blue */
+
+            --dark: #343a40; /* Dark Gray for text */
+
+            --dark-light: #6c757d; /* Medium Gray for text */
+
+            --light: #f8f9fa; /* Light Gray for backgrounds */
+
+            --gray: #ced4da; /* Lighter Gray for borders/placeholders */
+
+            --gray-light: #e9ecef; /* Very Light Gray for subtle elements */
+
+            --white: #ffffff;
+
+            --border-radius: 14px;
+
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+            --transition: all 0.3s ease;
+
+        }
+
+        
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            -webkit-tap-highlight-color: transparent;
+
+        }
+
+        
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+        
+
+        body {
+
+            font-family: 'Tajawal', sans-serif;
+
+            background-color: var(--light);
+
+            color: var(--dark);
+
+            min-height: 100vh;
+
+            padding: 0;
+
+            transition: var(--transition);
+
+            line-height: 1.6;
+
+        }
+
+        
+
+        .app-container {
+
+            max-width: 100%;
+
+            margin: 0 auto;
+
+            padding: 0;
+
+            position: relative;
+
+            min-height: 100vh;
+
+        }
+
+        
+
+        .main-content {
+
+            padding: 20px;
+
+            padding-bottom: 80px;
+
+        }
+
+        
+
+        .header {
+
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+
+            color: white;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-bottom-left-radius: 30px;
+
+            border-bottom-right-radius: 30px;
+
+            box-shadow: var(--box-shadow);
+
+            margin-bottom: 20px;
+
+            position: relative;
+
+            z-index: 10;
+
+        }
+
+        
+
+        .logo {
+
+            font-size: 1.8rem;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+        }
+
+        
+
+        .logo-icon {
+
+            font-size: 1.6rem;
+
+            /* No change needed, white is good against the gradient */
+
+        }
+
+        
+
+        .app-description {
+
+            font-size: 0.9rem;
+
+            opacity: 0.9;
+
+            margin-bottom: 10px;
+
+        }
+
+        
+
+        .card {
+
+            background: var(--white);
+
+            border-radius: var(--border-radius);
+
+            padding: 20px;
+
+            box-shadow: var(--box-shadow);
+
+            margin-bottom: 20px;
+
+            transition: var(--transition);
+
+            border: 1px solid var(--gray-light);
+
+        }
+
+        
+
+        .card-title {
+
+            font-size: 1.2rem;
+
+            margin-bottom: 15px;
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+        
+
+        .card-title i {
+
+            font-size: 1.1rem;
+
+            /* Added subtle text shadow for depth */
+
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+        }
+
+        
+
+        .input-group {
+
+            margin-bottom: 20px;
+
+        }
+
+        
+
+        .input-label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: 500;
+
+            color: var(--dark);
+
+            font-size: 0.95rem;
+
+        }
+
+        
+
+        .input-field {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid var(--gray-light);
+
+            border-radius: var(--border-radius);
+
+            font-family: inherit;
+
+            font-size: 1rem;
+
+            resize: none;
+
+            transition: var(--transition);
+
+            background-color: var(--light);
+
+            color: var(--dark);
+
+        }
+
+        
+
+        .input-field:focus {
+
+            outline: none;
+
+            border-color: var(--primary);
+
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2); /* Updated shadow color to primary */
+
+            background-color: var(--white);
+
+        }
+
+        
+
+        textarea.input-field {
+
+            min-height: 120px;
+
+        }
+
+        
+
+        .style-options {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+
+        }
+
+        
+
+        .style-option {
+
+            padding: 15px 10px;
+
+            text-align: center;
+
+            border-radius: var(--border-radius);
+
+            background: var(--light);
+
+            border: 1px solid var(--gray-light);
+
+            cursor: pointer;
+
+            transition: var(--transition);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        
+
+        .style-option i {
+
+            font-size: 1.4rem;
+
+            color: var(--gray);
+
+            transition: var(--transition); /* Ensure smooth transition for icon color/transform */
+
+        }
+        .style-option:hover i {
+
+            color: var(--dark-light); /* Slightly darker gray on hover */
+
+            transform: translateY(-2px); /* Subtle lift effect */
+
+        }
+
+        
+
+        .style-option.active {
+
+            background: rgba(255, 140, 0, 0.1); /* Updated background color to primary */
+
+            border-color: var(--primary);
+
+            color: var(--primary);
+
+            font-weight: 500;
+
+        }
+
+        
+
+        .style-option.active i {
+
+            color: var(--primary);
+
+        }
+        .style-option.active:hover i {
+
+            transform: scale(1.05); /* Slightly enlarge active icon on hover */
+
+        }
+
+        
+
+        .btn {
+
+            width: 100%;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: var(--border-radius);
+
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 1rem;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+        }
+
+        
+
+        .btn:hover {
+
+            opacity: 0.95;
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3); /* Updated shadow color to primary */
+
+        }
+
+        
+
+        .btn:active {
+
+            transform: translateY(0);
+
+        }
+
+        
+
+        .btn i {
+
+            font-size: 1.1rem;
+
+        }
+
+        
+
+        .btn-block {
+
+            display: block;
+
+            width: 100%;
+
+        }
+
+        
+
+        .btn-outline {
+
+            background: transparent;
+
+            border: 2px solid var(--primary);
+
+            color: var(--primary);
+
+        }
+
+        
+
+        .btn-outline:hover {
+
+            background: rgba(255, 140, 0, 0.1); /* Updated background color to primary */
+
+        }
+
+        
+
+        .action-buttons {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Adjusted for more flexibility */
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+        }
+
+        
+
+        .action-btn {
+
+            padding: 12px;
+
+            border-radius: var(--border-radius);
+
+            font-family: inherit;
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            border: none;
+
+            transition: var(--transition);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            font-size: 0.9rem;
+
+        }
+
+        
+
+        .action-btn i {
+
+            font-size: 1rem;
+
+        }
+
+        
+
+        .download-btn {
+
+            background: var(--success);
+
+            color: white;
+
+        }
+
+        
+
+        .download-btn:hover {
+
+            background: #218838; /* Darker green */
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3); /* Updated shadow color */
+
+        }
+
+        
+
+        .retry-btn {
+
+            background: var(--danger);
+
+            color: white;
+
+        }
+
+        
+
+        .retry-btn:hover {
+
+            background: #c82333; /* Darker red */
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3); /* Updated shadow color */
+
+        }
+        .share-btn { /* Combined styles for copy and share */
+
+            background: var(--info); /* Using info color for copy/share button */
+
+            color: white;
+
+        }
+        .share-btn:hover {
+
+            background: #0069d9; /* Darker info color */
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+
+        }
+
+        
+
+        .result-container {
+
+            display: none;
+
+            animation: fadeIn 0.5s;
+
+        }
+
+        
+
+        .result-image-container {
+
+            position: relative;
+
+            margin-bottom: 15px;
+
+            border-radius: var(--border-radius);
+
+            overflow: hidden;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+            border: 1px solid var(--gray-light);
+
+        }
+
+        
+
+        .result-image {
+
+            width: 100%;
+
+            display: block;
+
+            transition: transform 0.3s;
+
+        }
+
+        
+
+        .result-prompt {
+
+            background: rgba(0, 0, 0, 0.7);
+
+            color: white;
+
+            padding: 10px;
+
+            font-size: 0.85rem;
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            right: 0;
+
+            max-height: 50%;
+
+            overflow-y: auto;
+
+        }
+
+        
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 40px 20px;
+
+            display: none;
+
+            animation: fadeIn 0.5s;
+
+        }
+
+        
+
+        .empty-icon {
+
+            font-size: 3rem;
+
+            color: var(--primary-light); /* Keep consistent with light mode for empty state */
+
+            margin-bottom: 15px;
+
+            opacity: 0.8; /* Increased opacity slightly */
+
+            transition: var(--transition);
+
+        }
+
+        
+
+        .empty-title {
+
+            font-size: 1.3rem;
+
+            margin-bottom: 10px;
+
+            color: var(--dark-light);
+
+        }
+
+        
+
+        .empty-text {
+
+            color: var(--gray);
+
+            font-size: 0.95rem;
+
+        }
+
+        
+
+        .history-container {
+
+            display: none;
+
+            margin-top: 25px;
+
+        }
+
+        
+
+        .history-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 15px;
+
+        }
+
+        
+
+        .history-item {
+
+            border-radius: var(--border-radius);
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            position: relative;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+            transition: var(--transition);
+
+            aspect-ratio: 1/1;
+
+        }
+
+        
+
+        .history-item:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+        }
+
+        
+
+        .history-img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+        }
+
+        
+
+        .history-overlay {
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            right: 0;
+
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+
+            padding: 10px;
+
+            color: white;
+
+            font-size: 0.8rem;
+
+        }
+        /* Styles for the kebab menu button and its options */
+
+        .history-options {
+
+            position: absolute;
+
+            top: 10px;
+
+            right: 10px;
+
+            z-index: 5; /* Ensure it's above the image */
+
+        }
+        .kebab-menu-btn {
+
+            background: rgba(0, 0, 0, 0.5);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 50%;
+
+            width: 30px;
+
+            height: 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            font-size: 0.9rem;
+
+            transition: background 0.2s ease;
+
+        }
+        .kebab-menu-btn:hover {
+
+            background: rgba(0, 0, 0, 0.7);
+
+        }
+        .history-menu {
+
+            display: none; /* Hidden by default */
+
+            position: absolute;
+
+            top: 35px; /* Position below the button */
+
+            right: 0;
+
+            background: var(--white);
+
+            border-radius: var(--border-radius);
+
+            box-shadow: var(--box-shadow);
+
+            min-width: 120px;
+
+            overflow: hidden;
+
+            z-index: 10; /* Ensure it's above other elements */
+
+            animation: fadeIn 0.2s ease-out; /* Subtle animation */
+
+        }
+        .history-menu.active {
+
+            display: block;
+
+        }
+        .history-menu-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 10px 15px;
+
+            width: 100%;
+
+            text-align: right; /* For RTL */
+
+            background: none;
+
+            border: none;
+
+            color: var(--dark);
+
+            font-family: inherit;
+
+            font-size: 0.9rem;
+
+            cursor: pointer;
+
+            transition: background 0.2s ease;
+
+        }
+        .history-menu-item:hover {
+
+            background: var(--gray-light);
+
+        }
+        /* Dark mode adjustments for kebab menu */
+
+        .dark-mode .history-menu {
+
+            background: #2b2b2b;
+
+        }
+        .dark-mode .history-menu-item {
+
+            color: #f8f9fa;
+
+        }
+        .dark-mode .history-menu-item:hover {
+
+            background: #3a3a3a;
+
+        }
+
+        
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 5px 12px;
+
+            border-radius: 20px;
+
+            font-size: 0.8rem;
+
+            gap: 6px;
+
+            margin-bottom: 15px;
+
+        }
+
+        
+
+        .status-active {
+
+            background: rgba(40, 167, 69, 0.15); /* Updated background color */
+
+            color: var(--success);
+
+        }
+
+        
+
+        .status-inactive {
+
+            background: rgba(220, 53, 69, 0.15); /* Updated background color */
+
+            color: var(--danger);
+
+        }
+
+        
+
+        .alert-message {
+
+            padding: 15px;
+
+            border-radius: var(--border-radius);
+
+            margin-bottom: 20px;
+
+            text-align: center;
+
+            display: none;
+
+            animation: fadeIn 0.3s;
+
+            border-right: 4px solid;
+
+        }
+
+        
+
+        .alert-error {
+
+            background: rgba(220, 53, 69, 0.1); /* Updated background color */
+
+            color: var(--danger);
+
+            border-color: var(--danger);
+
+        }
+
+        
+
+        .alert-success {
+
+            background: rgba(40, 167, 69, 0.1); /* Updated background color */
+
+            color: var(--success);
+
+            border-color: var(--success);
+
+        }
+
+        
+
+        .loading-overlay {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            display: none;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 1000;
+
+            backdrop-filter: blur(5px);
+
+        }
+
+        
+
+        .loader {
+
+            width: 50px;
+
+            height: 50px;
+
+            border: 4px solid rgba(255, 140, 0, 0.2); /* Updated border color to primary */
+
+            border-radius: 50%;
+
+            border-top-color: var(--primary);
+
+            animation: spin 1s linear infinite;
+
+            margin-bottom: 20px;
+
+        }
+
+        
+
+        .loading-text {
+
+            font-size: 1.1rem;
+
+            color: var(--dark);
+
+            margin-top: 10px;
+
+        }
+
+        
+
+        .progress-container {
+
+            width: 80%;
+
+            max-width: 300px;
+
+            height: 8px;
+
+            background: var(--gray-light);
+
+            border-radius: 4px;
+
+            margin-top: 20px;
+
+            overflow: hidden;
+
+        }
+
+        
+
+        .progress-bar {
+
+            height: 100%;
+
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+
+            width: 0%;
+
+            transition: width 0.3s;
+
+        }
+
+        
+
+        .settings-panel {
+
+            position: fixed;
+
+            top: 0;
+
+            right: -100%;
+
+            width: 85%;
+
+            max-width: 350px;
+
+            height: 100vh;
+
+            background: var(--white);
+
+            box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+
+            padding: 20px;
+
+            z-index: 1001;
+
+            transition: right 0.3s;
+
+            overflow-y: auto;
+
+        }
+
+        
+
+        .settings-panel.active {
+
+            right: 0;
+
+        }
+
+        
+
+        .settings-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            padding-bottom: 15px;
+
+            border-bottom: 1px solid var(--gray-light);
+
+        }
+
+        
+
+        .settings-title {
+
+            font-size: 1.3rem;
+
+            color: var(--dark);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+        
+
+        .close-settings {
+
+            background: none;
+
+            border: none;
+
+            font-size: 1.5rem;
+
+            cursor: pointer;
+
+            color: var(--gray);
+
+        }
+
+        
+
+        .setting-group {
+
+            margin-bottom: 20px;
+
+        }
+
+        
+
+        .setting-label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: 500;
+
+            font-size: 0.95rem;
+
+        }
+
+        
+
+        .setting-select {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border-radius: var(--border-radius);
+
+            border: 1px solid var(--gray-light);
+
+            font-family: inherit;
+
+            background-color: var(--light);
+
+            color: var(--dark);
+
+            transition: var(--transition);
+
+        }
+
+        
+
+        .setting-select:focus {
+
+            outline: none;
+
+            border-color: var(--primary);
+
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1); /* Updated shadow color to primary */
+
+        }
+
+        
+
+        .settings-footer {
+
+            margin-top: 30px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid var(--gray-light);
+
+        }
+
+        
+
+        .footer {
+
+            text-align: center;
+
+            padding: 15px;
+
+            background: var(--white);
+
+            border-top: 1px solid var(--gray-light);
+
+            position: fixed;
+
+            bottom: 0;
+
+            left: 0;
+
+            right: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            justify-content: space-around;
+
+        }
+
+        
+
+        .footer-btn {
+
+            background: none;
+
+            border: none;
+
+            color: var(--gray);
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            padding: 10px;
+
+            position: relative;
+
+            transition: var(--transition);
+
+        }
+
+        
+
+        .footer-btn.active {
+
+            color: var(--primary);
+
+        }
+        .footer-btn:hover i,
+
+        .footer-btn.active i {
+
+            transform: translateY(-3px); /* Lift effect on hover/active */
+
+        }
+
+        
+
+        .footer-btn-badge {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            background: var(--danger);
+
+            color: white;
+
+            border-radius: 50%;
+
+            width: 18px;
+
+            height: 18px;
+
+            font-size: 0.7rem;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transform: translate(-5px, -5px);
+
+        }
+
+        
+
+        .tabs {
+
+            display: none;
+
+        }
+
+        
+
+        .tab-content {
+
+            display: none;
+
+        }
+
+        
+
+        .tab-content.active {
+
+            display: block;
+
+            animation: fadeIn 0.5s;
+
+        }
+
+        
+
+        .dark-mode {
+
+            background-color: #212121; /* Even darker background for dark mode */
+
+            color: #f8f9fa; /* Lighter text */
+
+        }
+
+        
+
+        .dark-mode .card {
+
+            background: #2b2b2b; /* Darker card background */
+
+            color: #f8f9fa;
+
+            border-color: #3a3a3a; /* Darker border */
+
+        }
+
+        
+
+        .dark-mode .input-field,
+
+        .dark-mode .setting-select {
+
+            background-color: #3a3a3a; /* Darker input background */
+
+            color: #f8f9fa;
+
+            border-color: #4a4a4a; /* Darker border */
+
+        }
+
+        
+
+        .dark-mode .input-field:focus,
+
+        .dark-mode .setting-select:focus {
+
+            background-color: #3a3a3a;
+
+        }
+
+        
+
+        .dark-mode .style-option {
+
+            background: #3a3a3a; /* Darker style option background */
+
+            border-color: #4a4a4a;
+
+            color: #f8f9fa;
+
+        }
+        .dark-mode .style-option i {
+
+            color: #adb5bd; /* Keep gray in dark mode for non-active */
+
+        }
+        .dark-mode .style-option:hover i {
+
+            color: #f8f9fa; /* Lighter color on hover in dark mode */
+
+        }
+
+        
+
+        .dark-mode .loading-overlay {
+
+            background: rgba(33, 33, 33, 0.95); /* Darker overlay */
+
+        }
+
+        
+
+        .dark-mode .empty-icon {
+
+            color: var(--primary-light); /* Keep consistent with light mode for empty state */
+
+        }
+
+        
+
+        .dark-mode .footer {
+
+            background: #2b2b2b; /* Darker footer background */
+
+            border-color: #3a3a3a;
+
+        }
+
+        
+
+        .dark-mode .settings-panel {
+
+            background: #2b2b2b; /* Darker settings panel background */
+
+            color: #f8f9fa;
+
+        }
+
+        
+
+        .dark-mode .settings-title,
+
+        .dark-mode .setting-label {
+
+            color: #f8f9fa;
+
+        }
+
+        
+
+        .dark-mode .close-settings {
+
+            color: #adb5bd;
+
+        }
+
+        
+
+        @keyframes fadeIn {
+
+            from { opacity: 0; transform: translateY(10px); }
+
+            to { opacity: 1; transform: translateY(0); }
+
+        }
+
+        
+
+        @keyframes spin {
+
+            to { transform: rotate(360deg); }
+
+        }
+
+        
+
+        @keyframes slideIn {
+
+            from { transform: translateX(100%); }
+
+            to { transform: translateX(0); }
+
+        }
+
+        
+
+        @keyframes imagePop {
+
+            0% { transform: scale(0.9); opacity: 0; }
+
+            100% { transform: scale(1); opacity: 1; }
+
+        }
+
+        
+
+        @media (min-width: 768px) {
+
+            .app-container {
+
+                max-width: 600px;
+
+                margin: 0 auto;
+
+            }
+
+            
+
+            .style-options {
+
+                grid-template-columns: repeat(4, 1fr);
+
+            }
+
+            
+
+            .history-grid {
+
+                grid-template-columns: repeat(3, 1fr);
+
+            }
+
+        }
+
+        
+
+        @media (max-width: 480px) {
+
+            .header {
+
+                padding: 15px;
+
+            }
+
+            
+
+            .logo {
+
+                font-size: 1.5rem;
+
+            }
+
+            
+
+            .action-buttons {
+
+                grid-template-columns: 1fr; /* Adjusted for smaller screens */
+
+            }
+
+            
+
+            .footer-btn {
+
+                font-size: 1rem;
+
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="app-container">
+
+        <!-- Header -->
+
+        <header class="header">
+
+            <h1 class="logo">
+
+                <i class="fas fa-lightbulb logo-icon"></i> <!-- Changed from fa-robot -->
+
+                <span>منشئ الصور الذكي</span>
+
+            </h1>
+
+            <p class="app-description">أنشئ صورًا مذهلة باستخدام الذكاء الاصطناعي</p>
+
+            <!-- API Status badge removed as per user request -->
+
+        </header>
+
+        
+
+        <!-- Main Content -->
+
+        <main class="main-content">
+
+            <!-- Generator Tab -->
+
+            <div class="tab-content active" id="generator-tab">
+
+                <div class="card">
+
+                    <h2 class="card-title">
+
+                        <i class="fas fa-paint-brush"></i> <!-- Changed from fa-magic -->
+
+                        إنشاء صورة جديدة
+
+                    </h2>
+
+                    
+
+                    <div class="input-group">
+
+                        <label for="prompt" class="input-label">وصف الصورة</label>
+
+                        <textarea id="prompt" class="input-field" placeholder="أدخل وصفًا تفصيليًا للصورة التي تريد إنشاءها... مثال: قطة فضائية ترتدي بدلة فضاء وتطير بين النجوم"></textarea>
+
+                    </div>
+
+                    
+
+                    <div class="input-group">
+
+                        <label class="input-label">نمط الصورة</label>
+
+                        <div class="style-options">
+
+                            <div class="style-option active" data-style="realistic">
+
+                                <i class="fas fa-camera"></i>
+
+                                <span>واقعي</span>
+
+                            </div>
+
+                            <div class="style-option" data-style="fantasy">
+
+                                <i class="fas fa-wand-magic-sparkles"></i> <!-- Changed from fa-hat-wizard -->
+
+                                <span>خيالي</span>
+
+                            </div>
+
+                            <div class="style-option" data-style="digital">
+
+                                <i class="fas fa-microchip"></i> <!-- Changed from fa-laptop-code -->
+
+                                <span>رقمي</span>
+
+                            </div>
+
+                            <div class="style-option" data-style="artistic">
+
+                                <i class="fas fa-paint-brush"></i>
+
+                                <span>فني</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                    <button id="generate-btn" class="btn">
+
+                        <i class="fas fa-plus"></i> <!-- Changed from fa-magic -->
+
+                        إنشاء الصورة
+
+                    </button>
+
+                </div>
+
+                
+
+                <div class="alert-message alert-error" id="error-message"></div>
+
+                <div class="alert-message alert-success" id="success-message"></div>
+
+                
+
+                <div class="empty-state" id="empty-state">
+
+                    <div class="empty-icon">
+
+                        <i class="fas fa-image"></i>
+
+                    </div>
+
+                    <h3 class="empty-title">لا توجد صور بعد</h3>
+
+                    <p class="empty-text">قم بإنشاء أول صورة لك باستخدام الذكاء الاصطناعي</p>
+
+                </div>
+
+                
+
+                <div class="card result-container" id="result-container">
+
+                    <div class="result-image-container">
+
+                        <img id="result-image" class="result-image" src="" alt="الصورة الناتجة">
+
+                        <div class="result-prompt" id="result-prompt"></div>
+
+                    </div>
+
+                    <div class="action-buttons">
+
+                        <button id="download-btn" class="action-btn download-btn">
+
+                            <i class="fas fa-download"></i>
+
+                            تحميل
+
+                        </button>
+
+                        <button id="retry-btn" class="action-btn retry-btn">
+
+                            <i class="fas fa-redo"></i>
+
+                            إعادة إنشاء مشابهة
+
+                        </button>
+
+                        <button id="share-link-btn" class="action-btn share-btn">
+
+                            <i class="fas fa-share-alt"></i>
+
+                            نسخ رابط الصورة
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <!-- History Tab -->
+
+            <div class="tab-content" id="history-tab">
+
+                <div class="card">
+
+                    <h2 class="card-title">
+
+                        <i class="fas fa-images"></i> <!-- Changed from fa-history -->
+
+                        سجل الصور
+
+                    </h2>
+
+                    
+
+                    <div class="history-container" id="history-container">
+
+                        <div class="history-grid" id="history-grid"></div>
+
+                    </div>
+
+                    
+
+                    <div class="empty-state" id="history-empty-state">
+
+                        <div class="empty-icon">
+
+                            <i class="fas fa-images"></i> <!-- Changed from fa-history -->
+
+                        </div>
+
+                        <h3 class="empty-title">لا توجد صور في السجل</h3>
+
+                        <p class="empty-text">سيتم حفظ الصور التي تنشئها هنا</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <!-- Settings Tab -->
+
+            <div class="tab-content" id="settings-tab">
+
+                <div class="card">
+
+                    <h2 class="card-title">
+
+                        <i class="fas fa-cog"></i>
+
+                        الإعدادات
+
+                    </h2>
+
+                    
+
+                    <div class="setting-group">
+
+                        <label for="theme-select" class="setting-label">وضع العرض</label>
+
+                        <select class="setting-select" id="theme-select">
+
+                            <option value="light">فاتح</option>
+
+                            <option value="dark">داكن</option>
+
+                            <option value="auto">تلقائي</option>
+
+                        </select>
+
+                    </div>
+
+                    
+
+                    <div class="setting-group">
+
+                        <label for="quality-select" class="setting-label">جودة الصورة</label>
+
+                        <select class="setting-select" id="quality-select">
+
+                            <option value="medium">متوسطة (سرعة متوسطة)</option>
+
+                            <option value="high">عالية (أبطأ)</option>
+
+                            <option value="low">منخفضة (أسرع)</option>
+
+                        </select>
+
+                    </div>
+
+                    
+
+                    <div class="setting-group">
+
+                        <label for="size-select" class="setting-label">حجم الصورة</label>
+
+                        <select class="setting-select" id="size-select">
+
+                            <option value="512x512">512x512 (افتراضي)</option>
+
+                            <option value="1024x1024">1024x1024</option>
+
+                            <option value="256x256">256x256</option>
+
+                        </select>
+
+                    </div>
+                    <!-- New setting for download image type -->
+
+                    <div class="setting-group">
+
+                        <label for="download-type-select" class="setting-label">نوع تحميل الصورة</label>
+
+                        <select class="setting-select" id="download-type-select">
+
+                            <option value="jpeg">JPEG</option>
+
+                            <option value="png">PNG</option>
+
+                        </select>
+
+                    </div>
+
+                    
+
+                    <button id="clear-history-btn" class="btn btn-outline">
+
+                        <i class="fas fa-trash"></i>
+
+                        مسح سجل الصور
+
+                    </button>
+
+                    
+
+                    <div class="settings-footer">
+
+                        <button id="reset-settings-btn" class="btn btn-outline">
+
+                            <i class="fas fa-undo"></i>
+
+                            إعادة تعيين الإعدادات
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+        
+
+        <!-- Footer Navigation -->
+
+        <footer class="footer">
+
+            <button class="footer-btn active" data-tab="generator-tab">
+
+                <i class="fas fa-plus"></i> <!-- Changed from fa-magic -->
+
+            </button>
+
+            <button class="footer-btn" data-tab="history-tab">
+
+                <i class="fas fa-image"></i> <!-- Changed from fa-history -->
+
+                <span class="footer-btn-badge" id="history-badge" style="display: none;">0</span>
+
+            </button>
+
+            <button class="footer-btn" data-tab="settings-tab">
+
+                <i class="fas fa-cog"></i>
+
+            </button>
+
+        </footer>
+
+        
+
+        <!-- Loading Overlay -->
+
+        <div class="loading-overlay" id="loading-overlay">
+
+            <div class="loader"></div>
+
+            <div class="loading-text" id="loading-text">جاري إنشاء صورتك...</div>
+
+            <div class="progress-container">
+
+                <div class="progress-bar" id="progress-bar"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // List of alternative proxy servers
+            const PROXY_SERVERS = [
+                "https://api.allorigins.win/raw?url=",
+                "https://corsproxy.io/?",
+                "https://api.codetabs.com/v1/proxy/?quest="
+            ];
+            
+            // DOM elements
+            const appContainer = document.getElementById('app-container');
+            const styleOptions = document.querySelectorAll('.style-option');
+            const generateBtn = document.getElementById('generate-btn');
+            const promptInput = document.getElementById('prompt');
+            const resultContainer = document.getElementById('result-container');
+            const resultImage = document.getElementById('result-image');
+            const resultPrompt = document.getElementById('result-prompt');
+            const downloadBtn = document.getElementById('download-btn');
+            const retryBtn = document.getElementById('retry-btn');
+            const shareLinkBtn = document.getElementById('share-link-btn');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const loadingText = document.getElementById('loading-text');
+            const progressBar = document.getElementById('progress-bar');
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+            const emptyState = document.getElementById('empty-state');
+            const historyContainer = document.getElementById('history-container');
+            const historyGrid = document.getElementById('history-grid');
+            const historyEmptyState = document.getElementById('history-empty-state');
+            const historyBadge = document.getElementById('history-badge');
+            const footerBtns = document.querySelectorAll('.footer-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const themeSelect = document.getElementById('theme-select');
+            const qualitySelect = document.getElementById('quality-select');
+            const sizeSelect = document.getElementById('size-select');
+            const downloadTypeSelect = document.getElementById('download-type-select'); // New element
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
+            const resetSettingsBtn = document.getElementById('reset-settings-btn');
+            
+            // Style keywords mapping
+            const styleTexts = {
+                'realistic': 'in a high-quality realistic photographic style',
+                'fantasy': 'in a fantasy art style with surreal details',
+                'digital': 'with a modern digital design in vibrant colors',
+                'artistic': 'as an artistic painting in oil paint style'
+            };
+
+            // Global variables
+            let generatedImages = [];
+            let currentTheme = 'light';
+            let currentTab = 'generator-tab';
+            let apiBaseUrl = 'http://23.95.85.59/ai/image.php';
+            let isGenerating = false;
+            let currentProxyIndex = 0;
+            let retryCount = 0;
+            const MAX_RETRIES = 3;
+            
+            // Initialize the application
+            initApp();
+            
+            // --- UPDATED: Event listeners for style options ---
+            // This now only changes the visual style of the button, not the text area.
+            styleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    if (isGenerating) return;
+                    
+                    styleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Event listener for generate button
+            generateBtn.addEventListener('click', generateImage);
+            
+            // Event listener for retry button (now "re-create similar")
+            retryBtn.addEventListener('click', function() {
+                showImproveDescriptionPrompt(
+                    () => { 
+                        generateImage();
+                    },
+                    () => { 
+                        // Do nothing on cancel
+                    }
+                );
+            });
+            
+            // Event listener for download button
+            downloadBtn.addEventListener('click', () => downloadImage());
+            // Event listener for share link button
+            shareLinkBtn.addEventListener('click', copyImageUrlToClipboard);
+            
+            // Event listeners for footer tab buttons
+            footerBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+            
+            // Event listener for theme selection
+            themeSelect.addEventListener('change', changeTheme);
+            // Event listener for download type selection
+            downloadTypeSelect.addEventListener('change', function() {
+                localStorage.setItem('aiImageDownloadType', this.value);
+                showSuccess('تم حفظ نوع التحميل المفضل.');
+            });
+            
+            // Event listener for clear history button
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            
+            // Event listener for reset settings button
+            resetSettingsBtn.addEventListener('click', resetSettings);
+            // Global click listener to close history menus when clicking outside
+            document.addEventListener('click', function(event) {
+                document.querySelectorAll('.history-menu.active').forEach(menu => {
+                    if (!menu.contains(event.target) && !event.target.closest('.kebab-menu-btn')) {
+                        menu.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Function to initialize the application
+            function initApp() {
+                loadHistory();
+                loadSettings();
+                updateHistoryUI();
+                detectPreferredTheme();
+                setupThemeListener();
+                switchTab(currentTab);
+            }
+
+            // --- UPDATED: Function to generate an image ---
+            async function generateImage() {
+                if (isGenerating) return;
+                
+                // 1. Get the user's "clean" prompt from the textarea
+                const originalPrompt = promptInput.value.trim();
+                const quality = qualitySelect.value;
+                const size = sizeSelect.value;
+                
+                if (!originalPrompt) {
+                    showError('الرجاء إدخال وصف للصورة');
+                    promptInput.focus();
+                    return;
+                }
+                
+                if (originalPrompt.length < 3) {
+                    showError('الوصف قصير جدًا. يرجى إدخال وصف أكثر تفصيلاً');
+                    return;
+                }
+
+                // 2. Get the selected style and its corresponding text keyword
+                const selectedStyle = document.querySelector('.style-option.active').dataset.style;
+                const styleKeyword = styleTexts[selectedStyle];
+
+                // 3. Combine the original prompt and style keyword internally for the API call
+                const fullPrompt = (originalPrompt + ' ' + styleKeyword).trim();
+                
+                isGenerating = true;
+                startLoading();
+                hideMessages();
+                
+                simulateProgress();
+                
+                try {
+                    // Translate the full combined prompt to English
+                    const translatedText = await translateToEnglish(fullPrompt);
+                    
+                    retryCount = 0;
+                    
+                    // Attempt to generate the image, passing both original and full prompts for history
+                    await tryGenerateImage(translatedText, originalPrompt, fullPrompt);
+                } catch (error) {
+                    console.error('Generation process error:', error);
+                    stopLoading();
+                    showError('حدث خطأ أثناء إنشاء الصورة. يرجى المحاولة مرة أخرى.');
+                    isGenerating = false;
+                }
+            }
+            
+            // Function to try generating an image with proxy fallback
+            async function tryGenerateImage(translatedText, originalPrompt, fullPrompt) {
+                retryCount++;
+                
+                loadingText.textContent = retryCount > 1 ? 
+                    `جاري إنشاء صورتك... (المحاولة ${retryCount}/${MAX_RETRIES})` : 
+                    'جاري إنشاء صورتك...';
+                
+                const params = new URLSearchParams();
+                params.append('text', translatedText);
+                params.append('quality', qualitySelect.value);
+                params.append('size', sizeSelect.value);
+                
+                const apiUrl = `${apiBaseUrl}?${params.toString()}`;
+                const proxyUrl = PROXY_SERVERS[currentProxyIndex];
+                const fullUrl = proxyUrl + encodeURIComponent(apiUrl);
+                
+                try {
+                    const response = await fetch(fullUrl);
+                    if (!response.ok) throw new Error('فشل في تحميل الصورة');
+                    
+                    const blob = await response.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+                    displayGeneratedImage(imageUrl, originalPrompt, fullPrompt);
+                } catch (error) {
+                    console.error('Error generating image:', error);
+                    
+                    if (retryCount < MAX_RETRIES) {
+                        currentProxyIndex = (currentProxyIndex + 1) % PROXY_SERVERS.length;
+                        setTimeout(() => tryGenerateImage(translatedText, originalPrompt, fullPrompt), 1000);
+                    } else {
+                        stopLoading();
+                        showError('فشل إنشاء الصورة بعد عدة محاولات. يرجى المحاولة لاحقًا.');
+                        isGenerating = false;
+                    }
+                }
+            }
+            
+            // --- UPDATED: Function to display the generated image ---
+            function displayGeneratedImage(imageUrl, originalPrompt, fullPrompt) {
+                stopLoading();
+                resultImage.src = imageUrl;
+                resultPrompt.textContent = originalPrompt; // Show the clean prompt to the user
+                promptInput.value = originalPrompt; // Put the clean prompt back in the input area
+                resultImage.classList.add('generated-image');
+                resultContainer.style.display = 'block';
+                emptyState.style.display = 'none';
+                
+                saveToHistory(imageUrl, originalPrompt, fullPrompt);
+                
+                showSuccess('تم إنشاء الصورة بنجاح!');
+                
+                isGenerating = false;
+                
+                setTimeout(() => {
+                    resultContainer.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            }
+            
+            // Function to translate text to English using Google Translate API
+            function translateToEnglish(text) {
+                return new Promise((resolve, reject) => {
+                    const encodedText = encodeURIComponent(text);
+                    const translationUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodedText}`;
+                    
+                    fetch(translationUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            const translatedText = data[0][0][0];
+                            resolve(translatedText);
+                        })
+                        .catch(error => reject(error));
+                });
+            }
+            
+            // Function to simulate progress bar
+            function simulateProgress() {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress > 90) {
+                        progress = 90;
+                    }
+                    progressBar.style.width = `${progress}%`;
+                    
+                    if (!isGenerating) {
+                        clearInterval(interval);
+                        progressBar.style.width = '100%';
+                        setTimeout(() => {
+                            progressBar.style.width = '0%';
+                        }, 500);
+                    }
+                }, 500);
+            }
+            
+            // Function to start loading animation
+            function startLoading() {
+                loadingOverlay.style.display = 'flex';
+                progressBar.style.width = '0%';
+            }
+            
+            // Function to stop loading animation
+            function stopLoading() {
+                loadingOverlay.style.display = 'none';
+            }
+            
+            // Function to hide alert messages
+            function hideMessages() {
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+            }
+            
+            // Function to show error message
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            }
+            
+            // Function to show success message
+            function showSuccess(message) {
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+            }
+            
+            // Function to load previous images from localStorage
+            function loadHistory() {
+                const savedImages = localStorage.getItem('aiGeneratedImages');
+                if (savedImages) {
+                    generatedImages = JSON.parse(savedImages);
+                }
+            }
+            
+            // Function to save image to history
+            function saveToHistory(imageUrl, prompt, fullPrompt) {
+                const newImage = {
+                    url: imageUrl,
+                    prompt: prompt,
+                    fullPrompt: fullPrompt,
+                    date: new Date().toISOString()
+                };
+                
+                generatedImages.unshift(newImage);
+                if (generatedImages.length > 50) {
+                    generatedImages = generatedImages.slice(0, 50);
+                }
+                
+                localStorage.setItem('aiGeneratedImages', JSON.stringify(generatedImages));
+                
+                updateHistoryUI();
+            }
+            
+            // Function to update history UI
+            function updateHistoryUI() {
+                if (generatedImages.length > 0) {
+                    renderHistory();
+                    historyContainer.style.display = 'block';
+                    historyEmptyState.style.display = 'none';
+                    historyBadge.textContent = generatedImages.length;
+                    historyBadge.style.display = 'flex';
+                } else {
+                    historyContainer.style.display = 'none';
+                    historyEmptyState.style.display = 'block';
+                    historyBadge.style.display = 'none';
+                }
+            }
+            
+            // --- UPDATED: Function to render previous images in the history tab ---
+            function renderHistory() {
+                historyGrid.innerHTML = '';
+                
+                generatedImages.forEach((image, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    item.innerHTML = `
+                        <img src="${image.url}" alt="صورة ${index + 1}" class="history-img">
+                        <div class="history-overlay">${image.prompt.substring(0, 30)}${image.prompt.length > 30 ? '...' : ''}</div>
+                        <div class="history-options">
+                            <button class="kebab-menu-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            <div class="history-menu">
+                                <button class="history-menu-item download-history-item">
+                                    <i class="fas fa-download"></i> تحميل
+                                </button>
+                                <button class="history-menu-item delete-history-item">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Event listener to view image in generator tab
+                    item.addEventListener('click', () => {
+                        resultImage.src = image.url;
+                        resultPrompt.textContent = image.prompt;
+                        promptInput.value = image.prompt; // Use the clean prompt from history
+                        resultContainer.style.display = 'block';
+                        emptyState.style.display = 'none';
+                        
+                        switchTab('generator-tab');
+                        
+                        setTimeout(() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 300);
+                    });
+                    // Event listener for kebab menu button
+                    item.querySelector('.kebab-menu-btn').addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        const menu = item.querySelector('.history-menu');
+                        document.querySelectorAll('.history-menu.active').forEach(openMenu => {
+                            if (openMenu !== menu) {
+                                openMenu.classList.remove('active');
+                            }
+                        });
+                        menu.classList.toggle('active');
+                    });
+                    // Event listener for download button in history menu
+                    item.querySelector('.download-history-item').addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        downloadImage(image.url, image.prompt);
+                        item.querySelector('.history-menu').classList.remove('active');
+                    });
+                    // Event listener for delete button in history menu
+                    item.querySelector('.delete-history-item').addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        showCustomConfirmation('هل أنت متأكد أنك تريد حذف هذه الصورة من السجل؟',
+                            () => {
+                                deleteImageFromHistory(index);
+                                item.querySelector('.history-menu').classList.remove('active');
+                            },
+                            () => {
+                                item.querySelector('.history-menu').classList.remove('active');
+                            }
+                        );
+                    });
+                    
+                    historyGrid.appendChild(item);
+                });
+            }
+            
+            // Function to clear history
+            function clearHistory() {
+                if (generatedImages.length === 0) {
+                    showError('لا توجد صور في السجل لمسحها');
+                    return;
+                }
+                
+                showCustomConfirmation('هل أنت متأكد أنك تريد مسح سجل الصور بالكامل؟ لا يمكن التراجع عن هذا الإجراء.',
+                    () => {
+                        generatedImages = [];
+                        localStorage.removeItem('aiGeneratedImages');
+                        updateHistoryUI();
+                        showSuccess('تم مسح سجل الصور بنجاح');
+                    },
+                    () => { // On cancel
+                        // Do nothing
+                    }
+                );
+            }
+            // Function to delete a specific image from history
+            function deleteImageFromHistory(index) {
+                generatedImages.splice(index, 1);
+                localStorage.setItem('aiGeneratedImages', JSON.stringify(generatedImages));
+                updateHistoryUI();
+                showSuccess('تم حذف الصورة من السجل بنجاح.');
+            }
+            
+            // Function to load settings
+            function loadSettings() {
+                const savedTheme = localStorage.getItem('aiImageTheme') || 'auto';
+                const savedQuality = localStorage.getItem('aiImageQuality') || 'medium';
+                const savedSize = localStorage.getItem('aiImageSize') || '512x512';
+                const savedDownloadType = localStorage.getItem('aiImageDownloadType') || 'jpeg';
+                
+                themeSelect.value = savedTheme;
+                qualitySelect.value = savedQuality;
+                sizeSelect.value = savedSize;
+                downloadTypeSelect.value = savedDownloadType;
+                
+                changeTheme();
+            }
+            
+            // Function to change theme
+            function changeTheme() {
+                const theme = themeSelect.value;
+                localStorage.setItem('aiImageTheme', theme);
+                
+                if (theme === 'auto') {
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    setTheme(prefersDark ? 'dark' : 'light');
+                } else {
+                    setTheme(theme);
+                }
+            }
+            
+            // Function to set the theme
+            function setTheme(theme) {
+                currentTheme = theme;
+                
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            }
+            
+            // Function to detect user's preferred theme
+            function detectPreferredTheme() {
+                if (themeSelect.value === 'auto') {
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+                    setTheme(prefersDark.matches ? 'dark' : 'light');
+                }
+            }
+            
+            // Function to set up listener for automatic theme changes
+            function setupThemeListener() {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+                
+                prefersDark.addListener(e => {
+                    if (themeSelect.value === 'auto') {
+                        setTheme(e.matches ? 'dark' : 'light');
+                    }
+                });
+            }
+            
+            // Function to reset settings to default
+            function resetSettings() {
+                showCustomConfirmation('هل أنت متأكد أنك تريد إعادة تعيين جميع الإعدادات إلى القيم الافتراضية؟',
+                    () => {
+                        localStorage.removeItem('aiImageTheme');
+                        localStorage.removeItem('aiImageQuality');
+                        localStorage.removeItem('aiImageSize');
+                        localStorage.removeItem('aiImageDownloadType');
+                        
+                        loadSettings();
+                        
+                        showSuccess('تم إعادة تعيين الإعدادات بنجاح');
+                    },
+                    () => { // On cancel
+                        // Do nothing
+                    }
+                );
+            }
+            
+            // Function to switch between tabs
+            function switchTab(tabId) {
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                footerBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                document.getElementById(tabId).classList.add('active');
+                
+                document.querySelector(`.footer-btn[data-tab="${tabId}"]`).classList.add('active');
+                
+                currentTab = tabId;
+                
+                if (tabId === 'history-tab') {
+                    updateHistoryUI();
+                }
+            }
+            
+            // Function to download the image
+            function downloadImage(imageUrlToDownload, originalPromptForDownload) {
+                const targetImageUrl = imageUrlToDownload || resultImage.src;
+                const targetPrompt = originalPromptForDownload || resultPrompt.textContent;
+                if (!targetImageUrl || (targetImageUrl.startsWith('blob:') && (resultImage.naturalWidth === 0 || resultImage.naturalHeight === 0))) {
+                    showError('لا يمكن تنزيل الصورة. قد يكون الرابط منتهي الصلاحية أو الصورة غير متاحة.');
+                    return;
+                }
+                
+                const downloadType = downloadTypeSelect.value;
+                let mimeType = 'image/jpeg';
+                let fileExtension = 'jpg';
+                if (downloadType === 'png') {
+                    mimeType = 'image/png';
+                    fileExtension = 'png';
+                }
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.naturalWidth;
+                    canvas.height = img.naturalHeight;
+                    ctx.drawImage(img, 0, 0);
+                    canvas.toBlob(blob => {
+                        if (blob) {
+                            const link = document.createElement('a');
+                            link.href = URL.createObjectURL(blob);
+                            link.download = `ai-image-${Date.now()}.${fileExtension}`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            showSuccess('تم بدء تحميل الصورة');
+                        } else {
+                            showError('فشل في إنشاء ملف الصورة للتنزيل.');
+                        }
+                    }, mimeType, 0.9);
+                };
+                
+                img.onerror = () => {
+                    showError('فشل تحميل الصورة للتنزيل. قد يكون الرابط منتهي الصلاحية.');
+                };
+                
+                img.src = targetImageUrl;
+            }
+            // Function to copy image URL to clipboard
+            function copyImageUrlToClipboard() {
+                const imageUrl = resultImage.src;
+                if (!imageUrl) {
+                    showError('لا يوجد رابط صورة لنسخه.');
+                    return;
+                }
+                const textarea = document.createElement('textarea');
+                textarea.value = imageUrl;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = 0;
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        showSuccess('تم نسخ رابط الصورة إلى الحافظة! (ملاحظة: هذا الرابط مؤقت وصالح لجلسة المتصفح الحالية فقط وقد لا يعمل خارج التطبيق).');
+                    } else {
+                        showError('فشل نسخ رابط الصورة.');
+                    }
+                } catch (err) {
+                    console.error('Failed to copy image URL: ', err);
+                    showError('فشل نسخ رابط الصورة.');
+                } finally {
+                    document.body.removeChild(textarea);
+                }
+            }
+            // Custom confirmation modal (replaces alert/confirm)
+            function showCustomConfirmation(message, onConfirm, onCancel) {
+                const modalId = 'custom-confirm-modal';
+                let modal = document.getElementById(modalId);
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.id = modalId;
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.6);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10000;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    `;
+                    modal.innerHTML = `
+                        <div style="
+                            background: var(--white);
+                            padding: 25px;
+                            border-radius: var(--border-radius);
+                            box-shadow: var(--box-shadow);
+                            text-align: center;
+                            max-width: 350px;
+                            width: 90%;
+                            animation: fadeIn 0.3s forwards;
+                        ">
+                            <p id="custom-confirm-message" style="margin-bottom: 20px; font-size: 1.1rem; color: var(--dark);"></p>
+                            <div style="display: flex; justify-content: space-around; gap: 10px;">
+                                <button id="custom-confirm-yes" class="btn" style="background: var(--danger); flex-grow: 1;">نعم</button>
+                                <button id="custom-confirm-no" class="btn btn-outline" style="flex-grow: 1;">إلغاء</button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    document.getElementById('custom-confirm-yes').addEventListener('click', () => {
+                        onConfirm();
+                        modal.style.opacity = 0;
+                        setTimeout(() => modal.remove(), 300);
+                    });
+                    document.getElementById('custom-confirm-no').addEventListener('click', () => {
+                        onCancel();
+                        modal.style.opacity = 0;
+                        setTimeout(() => modal.remove(), 300);
+                    });
+                }
+                
+                document.getElementById('custom-confirm-message').textContent = message;
+                modal.style.opacity = 1;
+            }
+            // New function to show prompt for improving description
+            function showImproveDescriptionPrompt(onGenerate, onCancel) {
+                const modalId = 'improve-description-modal';
+                let modal = document.getElementById(modalId);
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.id = modalId;
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.6);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10000;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    `;
+                    modal.innerHTML = `
+                        <div style="
+                            background: var(--white);
+                            padding: 25px;
+                            border-radius: var(--border-radius);
+                            box-shadow: var(--box-shadow);
+                            text-align: center;
+                            max-width: 350px;
+                            width: 90%;
+                            animation: fadeIn 0.3s forwards;
+                        ">
+                            <p id="improve-description-message" style="margin-bottom: 20px; font-size: 1.1rem; color: var(--dark);">
+                                لإنشاء صورة مشابهة ولكن مختلفة، يمكنك تحسين الوصف الحالي أو إضافة تفاصيل جديدة.
+                            </p>
+                            <div style="display: flex; justify-content: space-around; gap: 10px;">
+                                <button id="improve-description-generate" class="btn" style="background: var(--primary); flex-grow: 1;">إنشاء صورة جديدة</button>
+                                <button id="improve-description-cancel" class="btn btn-outline" style="flex-grow: 1;">إلغاء</button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    document.getElementById('improve-description-generate').addEventListener('click', () => {
+                        onGenerate();
+                        modal.style.opacity = 0;
+                        setTimeout(() => modal.remove(), 300);
+                    });
+                    document.getElementById('improve-description-cancel').addEventListener('click', () => {
+                        onCancel();
+                        modal.style.opacity = 0;
+                        setTimeout(() => modal.remove(), 300);
+                    });
+                }
+                modal.style.opacity = 1;
+            }
+        });
+    </script>
+</body>
+</html>
